@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import MenuNav from "@/Components/NavBars/Navigations/MenuNav"
 import LastVisitedNav from "@/Components/NavBars/LastVisited/LastVisitedNav"
+import MobileNav from "@/Components/NavBars/MobileNav/MobileNav"
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -30,7 +31,7 @@ export default function RootLayout({
           </div>
 
           <div className="fixed bottom-10 right-10">
-
+            <MobileNav />
           </div>
 
         </div>
