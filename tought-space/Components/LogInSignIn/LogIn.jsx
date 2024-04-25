@@ -1,7 +1,5 @@
 import { useState, useRef } from "react"
 import { logInAccount } from "@/Utils/UserAuth"
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth } from "@/app/firebaseConfig";
 
 
 export default function LogIn() {
@@ -16,7 +14,6 @@ export default function LogIn() {
   function getUserInfo(field, ref) {
     setUserLogInInfo((prev) => {
       let info = { ...prev, [field]: ref.current.value }
-      console.log(info)
       return info
     })
   }

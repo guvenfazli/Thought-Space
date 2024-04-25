@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-
+import MenuNav from "@/Components/NavBars/Navigations/MenuNav"
+import LastVisitedNav from "@/Components/NavBars/LastVisited/LastVisitedNav"
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -16,7 +17,25 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className="bg-gradient-to-r from-purple-300 to-blue-300">
+        <div className="flex justify-around w-full p-3 bg-gradient-to-r from-purple-300 to-blue-300">
+          <div className="flex items-start w-1/5 justify-center max-sm:hidden">
+            <MenuNav />
+          </div>
+
+          {children}
+
+          <div className="flex items-start w-1/5 justify-center max-sm:hidden">
+            <LastVisitedNav />
+          </div>
+
+          <div className="fixed bottom-10 right-10">
+
+          </div>
+
+        </div>
+
+      </body>
     </html>
   );
 }
