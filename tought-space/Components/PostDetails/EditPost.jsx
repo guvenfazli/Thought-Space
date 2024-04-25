@@ -37,7 +37,7 @@ export default function EditPost({ value, postRef, userId, edit }) {
     } else {
       setOldLog(() => {
         let olderLogs = [...value.edited]
-        olderLogs.push({ title: value.title, body: value.body })
+        olderLogs.push({ title: value.title, body: value.body, editDate: editDate })
         return olderLogs
       })
     }
@@ -76,7 +76,6 @@ export default function EditPost({ value, postRef, userId, edit }) {
       </div>
       <div className="flex justify-around">
         <button className="bg-blue-800 px-3 py-2 rounded-lg text-white text-sm duration-150 ease-in-out font-bold hover:bg-blue-600" onClick={() => editPost()}>Done Editing</button>
-        <button className="bg-green-800 px-3 py-2 rounded-lg text-white text-sm duration-150 ease-in-out font-bold hover:bg-green-600 max-md:px-2 max-md:py-1" onClick={() => likeThePost(value)}>Like the Post!</button>
       </div>
 
       <div className="flex justify-center">

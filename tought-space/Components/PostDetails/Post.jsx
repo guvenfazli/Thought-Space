@@ -1,4 +1,52 @@
-export default function Post({ value, like, edit }) {
+import dayjs from "dayjs"
+
+import { doc } from "firebase/firestore"
+import { db } from "@/app/firebaseConfig"
+import { getDoc, updateDoc } from "firebase/firestore"
+
+export default function Post({ value, edit, postRef, userId }) {
+
+  const latestEdits = value.edited?.sort((a, b) => b.editDate - a.editDate)
+
+  async function likeThePost(post, userId, postRef) {
+    const getUserRef = doc(db, "userList", userId)
+    const currentUser = await getDoc(getUserRef).then((data) => data.data())
+    const alreadyLiked = currentUser.likedPosts.some((postId) => postId.id === post.id)
+    let likedPostsList = [...currentUser.likedPosts]
+
+    if (!alreadyLiked) {
+      likedPostsList.push(post)
+      await updateDoc(getUserRef, {
+        ...currentUser,
+        likedPosts: likedPostsList
+      })
+    } else {
+      let alreadyIndex = currentUser.likedPosts.findIndex((post) => post.id === post.id)
+      likedPostsList.splice(alreadyIndex, 1)
+      await updateDoc(getUserRef, {
+        ...currentUser,
+        likedPosts: likedPostsList
+      })
+    }
+
+    const getChosenDoc = await getDoc(postRef).then((data) => data.data())
+    const userAlreadyLiked = getChosenDoc.likes.some((user) => user === userId)
+    let likedUsersList = [...getChosenDoc.likes]
+    if (!userAlreadyLiked) {
+      likedUsersList.unshift(userId)
+      await updateDoc(postRef, {
+        ...getChosenDoc,
+        likes: likedUsersList
+      })
+    } else {
+      let alreadyIndex = getChosenDoc.likes.findIndex((user) => user === userId)
+      likedUsersList.splice(alreadyIndex, 1)
+      await updateDoc(postRef, {
+        ...getChosenDoc,
+        likes: likedUsersList
+      })
+    }
+  }
 
   return (
 
@@ -17,7 +65,8 @@ export default function Post({ value, like, edit }) {
       <div className="flex justify-around">
         <button className="bg-blue-800 px-3 py-2 rounded-lg text-white text-sm duration-150 ease-in-out font-bold hover:bg-blue-600 max-md:px-2 max-md:py-1"
           onClick={() => edit(true)}>Edit Post</button>
-        <button className="bg-green-800 px-3 py-2 rounded-lg text-white text-sm duration-150 ease-in-out font-bold hover:bg-green-600 max-md:px-2 max-md:py-1" onClick={() => likeThePost(value)}>Like the Post!</button>
+        <button className="bg-green-800 px-3 py-2 rounded-lg text-white text-sm duration-150 ease-in-out font-bold hover:bg-green-600 max-md:px-2 max-md:py-1"
+          onClick={() => likeThePost(value, userId, postRef)}>Like the Post!</button>
       </div>
 
       <div className="flex justify-center">
@@ -29,6 +78,20 @@ export default function Post({ value, like, edit }) {
       </div>
 
       <p className="text-sm text-gray-500">{value.edited && "This post has edited before."}</p>
+
+      {
+        latestEdits?.map((editHistory) =>
+          <div key={value.id} className="flex flex-col border-2 text-lg items-start p-3">
+            <div className="mb-3">
+              <p className="text-sm text-gray-500 max-md:text-xs">Edit Date: {dayjs(editHistory.editDate).format('DD / MM / YYYY')}</p>
+            </div>
+
+            <div>
+              <p className="mb-3 max-md:text-base">Old Title: {editHistory.title}</p>
+              <p className="max-md:text-base">Old Text: {editHistory.body}</p>
+            </div>
+          </div>
+        )}
     </div>
 
 
