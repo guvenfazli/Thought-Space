@@ -5,7 +5,7 @@ import { collection } from "firebase/firestore";
 import { redirect } from "next/navigation";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-
+import LoadingComponent from "@/Components/LoadingComp/LoadingComponent"
 export default function PostSection() {
   const [user, userLoading] = useAuthState(auth)
   const postsDataRef = collection(db, "posts")
@@ -17,7 +17,7 @@ export default function PostSection() {
   }
   return (
     <>
-      {loading ? <p>Loading...</p> : values.map((post) => <PostCard key={post.id} post={post} />)}
+      {loading ? <LoadingComponent /> : values.map((post) => <PostCard key={post.id} post={post} />)}
     </>
 
   )

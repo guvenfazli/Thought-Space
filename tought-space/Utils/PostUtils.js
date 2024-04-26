@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, setDoc } from "firebase/firestore"
+import { addDoc, collection, doc, getDocs, setDoc } from "firebase/firestore"
 import { db } from "@/app/firebaseConfig"
 import { getDoc, updateDoc } from "firebase/firestore"
 import dayjs from "dayjs"
@@ -50,9 +50,27 @@ export async function createNewPost(post, userId) {
   const time = new Date;
   const postCreatedAt = time.getTime();
   let uniquePostId;
-  await addDoc(postListRef, {...post, postOwner: userId, ownerName: creator.name, postId: postListRef.id, createdAt: postCreatedAt}).then((createdPost) => {
+  await addDoc(postListRef, { ...post, postOwner: userId, ownerName: creator.name, postId: postListRef.id, createdAt: postCreatedAt }).then((createdPost) => {
     uniquePostId = createdPost.id
-    return setDoc(doc(db, "posts", createdPost.id), {...post, id:createdPost.id, postOwner: userId, ownerName: creator.name, createdAt: postCreatedAt})
-  }).then(() => setDoc(doc(db,"userList", userId, "posts", uniquePostId),{...post, id: uniquePostId, postOwner: userId, ownerName: creator.name, createdAt: postCreatedAt}))
+    return setDoc(doc(db, "posts", createdPost.id), { ...post, id: createdPost.id, postOwner: userId, ownerName: creator.name, createdAt: postCreatedAt })
+  }).then(() => setDoc(doc(db, "userList", userId, "posts", uniquePostId), { ...post, id: uniquePostId, postOwner: userId, ownerName: creator.name, createdAt: postCreatedAt }))
+}
 
+export async function addViewData(postId, post, userId) {
+  const docingRef = doc(db, "posts", postId)
+  const theDoc = await getDoc(docingRef).then((data) => data.data())
+  await updateDoc(docingRef, {
+    ...post,
+    timesClicked: post.timesClicked + 1
+  })
+
+  const userRef = collection(db, "userList", userId, "lastPosts")
+  const visitedPosts = await getDocs(userRef)
+  const visitedList = []
+  visitedPosts.forEach((post) => { visitedList.push({ ...post.data() }) })
+  console.log(visitedList)
+  const alreadyVisited = visitedList.some((post) => post.id === postId)
+  if (!alreadyVisited) {
+    await addDoc(userRef, theDoc)
+  }
 }
