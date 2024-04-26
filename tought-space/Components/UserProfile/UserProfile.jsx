@@ -8,8 +8,9 @@ import Link from "next/link"
 import dayjs from "dayjs"
 import { useEffect, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
-import { redirect } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import LoadingComponent from "@/Components/UserProfile/UserProfile"
+
 export default function UserProfile({ userId }) {
   const [user, loading] = useAuthState(auth)
   const userRef = doc(db, "userList", userId)
@@ -25,6 +26,12 @@ export default function UserProfile({ userId }) {
 
     if (!user) {
       redirect('/LogInSignIn?mode=logIn')
+    }
+
+    if (!userLoading) {
+      if (!value) {
+        notFound()
+      }
     }
   }, [loading])
 

@@ -40,9 +40,16 @@ export default function NewPost() {
     e.preventDefault()
     setLoading(true)
     try {
-      await createNewPost(post, userId)
-      setLoading(false)
-      setCreated(true)
+      if (postInfo.title.length <= 0 || postInfo.body.length <= 0) {
+        setPostError(true)
+        setLoading(false)
+
+      } else {
+        await createNewPost(post, userId)
+        setLoading(false)
+        setCreated(true)
+
+      }
     } catch {
       setPostError(true)
       setLoading(false)
@@ -83,14 +90,14 @@ export default function NewPost() {
             Title
           </label>
 
-          <input ref={titleRef} onChange={() => creatingNewPost("title", titleRef)} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" type="text" placeholder="Title" />
+          <input ref={titleRef} onChange={() => creatingNewPost("title", titleRef)} className={`shadow duration-150 ease-in-out appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${postError && "border-red-600"}`} id="title" type="text" placeholder="Title" />
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
             Share Your Ideas!
           </label>
 
-          <textarea ref={bodyRef} onChange={() => creatingNewPost("body", bodyRef)} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" rows={6} placeholder="We are listening..."></textarea>
+          <textarea ref={bodyRef} onChange={() => creatingNewPost("body", bodyRef)} className={`shadow duration-150 ease-in-out appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${postError && "border-red-600"}`} id="description" rows={6} placeholder="We are listening..."></textarea>
         </div>
 
         <div className="flex items-center justify-between">
@@ -103,7 +110,7 @@ export default function NewPost() {
 
       <div className="flex justify-center">
         <AnimatePresence>
-          {created && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{opacity: 0}} className="bg-green-500 text-white font-bold p-3 rounded-lg shadow-md max-sm:text-center max-sm:text-sm">Post Created Succesfully! Redirecting...</motion.p>}
+          {created && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="bg-green-500 text-white font-bold p-3 rounded-lg shadow-md max-sm:text-center max-sm:text-sm">Post Created Succesfully! Redirecting...</motion.p>}
           {postError && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="bg-red-800 text-white font-bold p-3 rounded-lg shadow-md">Title or idea is missing!</motion.p>}
         </AnimatePresence>
       </div>

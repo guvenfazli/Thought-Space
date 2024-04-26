@@ -10,10 +10,11 @@ import { useEffect } from "react"
 export default function LogInSignInPage() {
   const searchParams = useSearchParams()
   let mode = searchParams.get('mode')
+  const token = localStorage.getItem('token')
   const [user, loading] = useAuthState(auth)
 
   useEffect(() => {
-    if (user) {
+    if (user || token) {
       redirect('/')
     }
   }, [user])

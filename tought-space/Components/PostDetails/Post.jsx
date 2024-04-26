@@ -1,10 +1,21 @@
 import dayjs from "dayjs"
 
 import { doc } from "firebase/firestore"
-import { db } from "@/app/firebaseConfig"
+import { auth, db } from "@/app/firebaseConfig"
 import { getDoc, updateDoc } from "firebase/firestore"
+import { useEffect, useState } from "react"
+import { useAuthState } from "react-firebase-hooks/auth"
 
 export default function Post({ value, edit, postRef, userId }) {
+  const [sameUser, setSameUser] = useState(false)
+  const [user, loading] = useAuthState(auth)
+
+  useEffect(() => {
+    if (value.postOwner === user.uid) {
+      setSameUser(true)
+    }
+  }, [loading])
+  console.log(value)
 
   const latestEdits = value.edited?.sort((a, b) => b.editDate - a.editDate)
 
@@ -63,8 +74,9 @@ export default function Post({ value, edit, postRef, userId }) {
         <p className="text-lg text-gray-600 font-medium max-md:text-base">{value.body}</p>
       </div>
       <div className="flex justify-around">
-        <button className="bg-blue-800 px-3 py-2 rounded-lg text-white text-sm duration-150 ease-in-out font-bold hover:bg-blue-600 max-md:px-2 max-md:py-1"
+        {sameUser && <button className="bg-blue-800 px-3 py-2 rounded-lg text-white text-sm duration-150 ease-in-out font-bold hover:bg-blue-600 max-md:px-2 max-md:py-1"
           onClick={() => edit(true)}>Edit Post</button>
+        }
         <button className="bg-green-800 px-3 py-2 rounded-lg text-white text-sm duration-150 ease-in-out font-bold hover:bg-green-600 max-md:px-2 max-md:py-1"
           onClick={() => likeThePost(value, userId, postRef)}>Like the Post!</button>
       </div>
