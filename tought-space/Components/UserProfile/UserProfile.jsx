@@ -8,7 +8,7 @@ import Link from "next/link"
 import dayjs from "dayjs"
 import { useEffect, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
-
+import { redirect } from "next/navigation"
 import LoadingComponent from "@/Components/UserProfile/UserProfile"
 export default function UserProfile({ userId }) {
   const [user, loading] = useAuthState(auth)
@@ -21,6 +21,10 @@ export default function UserProfile({ userId }) {
   useEffect(() => {
     if (user?.uid === userId) {
       setIsSameUser(true)
+    }
+
+    if (!user) {
+      redirect('/LogInSignIn?mode=logIn')
     }
   }, [loading])
 
@@ -66,7 +70,7 @@ export default function UserProfile({ userId }) {
       }
 
 
-      <p className="text-xl mb-4 max-md:text-base max-sm:text-lg">The posts that {value?.name} liked before</p>
+      <p className="text-xl mb-4 max-md:text-base max-sm:text-lg">The posts that {isSameUser ? "you" : value?.name} liked before</p>
       {
         value?.likedPosts?.map((post) =>
           <div key={post.id}>

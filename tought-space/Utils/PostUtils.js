@@ -68,7 +68,6 @@ export async function addViewData(postId, post, userId) {
   const visitedPosts = await getDocs(userRef)
   const visitedList = []
   visitedPosts.forEach((post) => { visitedList.push({ ...post.data() }) })
-  console.log(visitedList)
   const alreadyVisited = visitedList.some((post) => post.id === postId)
   if (!alreadyVisited) {
     await addDoc(userRef, theDoc)

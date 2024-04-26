@@ -1,9 +1,3 @@
-import Link from "next/link"
-import { useAuthState } from "react-firebase-hooks/auth"
-import { auth } from "@/app/firebaseConfig"
-import { useEffect, useState } from "react"
-import { doc, getDoc } from "firebase/firestore"
-import { db } from "@/app/firebaseConfig"
 import Buttons from "./Buttons"
 
 export default function ButtonNav({user}) {
