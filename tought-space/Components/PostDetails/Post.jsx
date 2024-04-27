@@ -5,6 +5,7 @@ import { auth, db } from "@/app/firebaseConfig"
 import { getDoc, updateDoc } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
+import { motion } from "framer-motion"
 
 export default function Post({ value, edit, postRef, userId }) {
   const [sameUser, setSameUser] = useState(false)
@@ -61,7 +62,7 @@ export default function Post({ value, edit, postRef, userId }) {
 
   return (
 
-    <div className="flex flex-col gap-y-4 w-full">
+    <motion.div  initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col gap-y-4 w-full">
       <div className="flex justify-center">
         <p className="text-3xl mb-2 text-blue-800 font-semibold max-md:text-xl">{value.title}</p>
       </div>
@@ -104,7 +105,7 @@ export default function Post({ value, edit, postRef, userId }) {
             </div>
           </div>
         )}
-    </div>
+    </motion.div>
 
 
 

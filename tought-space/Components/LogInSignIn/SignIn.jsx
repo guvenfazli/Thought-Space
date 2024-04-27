@@ -1,6 +1,6 @@
 import { useState, useRef } from "react"
 import { createAccount } from "@/Utils/UserAuth"
-
+import { motion } from "framer-motion"
 export default function SignIn() {
   const [userSignInInfo, setUserSignInInfo] = useState({
     name: "",
@@ -29,7 +29,7 @@ export default function SignIn() {
 
 
   return (
-    <form onSubmit={(e) => signIn(userSignInInfo, e)} className="flex flex-col p-1 gap-y-4">
+    <motion.form initial={{ opacity: 0 }} animate={{ opacity: 1 }} onSubmit={(e) => signIn(userSignInInfo, e)} className="flex flex-col p-1 gap-y-4">
       <label htmlFor="name" className="text-2xl">Name</label>
       <input ref={nameRef} onChange={() => getUserInfo("name", nameRef)} type="text" name="name" className="text-black p-2 rounded-xl" placeholder="Name" />
       <label htmlFor="age" className="text-2xl">Age</label>
@@ -41,6 +41,6 @@ export default function SignIn() {
       <div className="flex justify-center items-center">
         <button type="submit" className="py-2 px-8 border-2 rounded-2xl bg-blue-600 duration-150 ease-in-out hover:bg-blue-700 text-white font-bold">Sign In</button>
       </div>
-    </form>
+    </motion.form>
   )
 }
