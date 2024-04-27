@@ -19,15 +19,34 @@ export default function NewPost() {
   const [postInfo, setPostInfo] = useState({
     title: undefined,
     body: undefined,
+    hashtag: undefined,
     timesClicked: 0,
     likes: []
   })
+  const [hashTagInfo, setHashTagInfo] = useState()
 
   const [loading, setLoading] = useState(false)
   const [created, setCreated] = useState(false)
   const [postError, setPostError] = useState(false)
   const titleRef = useRef()
   const bodyRef = useRef()
+  const hashtagRef = useRef()
+
+  function addHashTag(e) {
+    if (e.key === ',') {
+      hashtagRef.current.value = ''
+      let hashtagList = []
+      hashtagList.push(hashTagInfo.replace(',', ''))
+      setPostInfo((prev) => {
+        if(prev.hashtag){
+          hashtagList.push(...prev.hashtag)
+        }
+        let post = { ...prev, hashtag: hashtagList }
+        return post
+      })
+      setHashTagInfo('')
+    }
+  }
 
   function creatingNewPost(inputType, ref) {
     setPostInfo((prev) => {
@@ -98,6 +117,15 @@ export default function NewPost() {
           </label>
 
           <textarea ref={bodyRef} onChange={() => creatingNewPost("body", bodyRef)} className={`shadow duration-150 ease-in-out appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${postError && "border-red-600"}`} id="description" rows={6} placeholder="We are listening..."></textarea>
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="hashtag">
+            Hashtags
+          </label>
+
+          <input ref={hashtagRef} onChange={(e) => setHashTagInfo(e.target.value)} onKeyUp={addHashTag} className={`shadow duration-150 ease-in-out appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${postError && "border-red-600"}`} id="title" type="text" placeholder="Separate with ','" />
+          {postInfo.hashtag?.map((hast) => <p className=" text-gray-800 text-sm hover:underline hover:cursor-pointer" key={hast}>#{hast}</p>)}
         </div>
 
         <div className="flex items-center justify-between">

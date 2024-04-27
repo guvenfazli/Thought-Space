@@ -6,7 +6,7 @@ import { redirect } from "next/navigation"
 import { motion } from "framer-motion"
 import { addViewData } from "@/Utils/PostUtils"
 
-export default function PostCard({ post }) {
+export default function PostCard({ post, setFilter }) {
   const [user, loading] = useAuthState(auth)
 
   useEffect(() => {
@@ -16,7 +16,9 @@ export default function PostCard({ post }) {
   }, [user])
 
 
+  function filterPosts(){
 
+  }
 
 
   return (
@@ -28,6 +30,10 @@ export default function PostCard({ post }) {
 
       <div className="flex text-ellipsis border-y-2 py-4">
         <p className="line-clamp-3 text-lg text-gray-600 font-medium max-md:text-base max-sm:text-sm">{post.body}</p>
+      </div>
+
+      <div className="flex flex-row gap-x-1">
+        {post.hashtag.map((tag) => <p key={tag} onClick={() => setFilter(tag)} className="text-gray-700 text-xs hover:underline hover:cursor-pointer">#{tag}</p>)}
       </div>
 
       <div className="flex justify-between items-center">

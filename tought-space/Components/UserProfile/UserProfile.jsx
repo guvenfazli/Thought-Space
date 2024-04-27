@@ -64,6 +64,10 @@ export default function UserProfile({ userId }) {
                     <p className="text-gray-500 max-md:text-xs text-sm whitespace-nowrap">{dayjs(post.createdAt).format('DD / MMM / YYYY')}</p>
                   </div>
                   <p className="text-gray-800 text-lg max-md:text-sm max-sm:text-sm">{post.body}</p>
+                  <div className="flex flex-row gap-x-1">
+                    {post.hashtag.map((tag) => <p key={tag} className="text-gray-700 text-xs hover:underline hover:cursor-pointer">#{tag}</p>)}
+                  </div>
+
                   <div className="flex justify-between items-center">
                     <Link className="px-3 py-2 shadow-lg bg-blue-800 text-white rounded-lg text-sm duration-150 ease-in-out hover:bg-blue-600 max-md:text-xs max-sm:px-2 max-sm:py-1 " href={`/${post.id}`}>See More</Link>
                     {isSameUser && <button className=" bg-red-800 px-3 py-2 ease-in-out duration-150 shadow-lg text-sm rounded-lg text-white hover:bg-red-600 max-sm:px-2 max-sm:py-1 max-md:text-xs" onClick={() => removeThePost(post.id)}>Remove</button>}

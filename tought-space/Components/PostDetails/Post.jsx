@@ -16,7 +16,6 @@ export default function Post({ value, edit, postRef, userId }) {
       setSameUser(true)
     }
   }, [loading])
-  console.log(value)
 
   const latestEdits = value.edited?.sort((a, b) => b.editDate - a.editDate)
 
@@ -62,7 +61,7 @@ export default function Post({ value, edit, postRef, userId }) {
 
   return (
 
-    <motion.div  initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col gap-y-4 w-full">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col gap-y-4 w-full">
       <div className="flex justify-center">
         <p className="text-3xl mb-2 text-blue-800 font-semibold max-md:text-xl">{value.title}</p>
       </div>
@@ -72,8 +71,15 @@ export default function Post({ value, edit, postRef, userId }) {
       </div>
       <div className="border-y-4 py-3 flex flex-col px-2">
         <p className="mb-3 text-xl text-blue-800 font-medium max-md:text-lg">{value.title}</p>
-        <p className="text-lg text-gray-600 font-medium max-md:text-base">{value.body}</p>
+        <p className="text-lg text-gray-600 font-medium max-md:text-base mb-4">{value.body}</p>
+
+        <div className="flex flex-row gap-x-1">
+          {value.hashtag.map((tag) => <p key={tag} className="text-gray-700 text-xs hover:underline hover:cursor-pointer">#{tag}</p>)}
+        </div>
       </div>
+
+
+
       <div className="flex justify-around">
         {sameUser && <button className="bg-blue-800 px-3 py-2 rounded-lg text-white text-sm duration-150 ease-in-out font-bold hover:bg-blue-600 max-md:px-2 max-md:py-1"
           onClick={() => edit(true)}>Edit Post</button>
