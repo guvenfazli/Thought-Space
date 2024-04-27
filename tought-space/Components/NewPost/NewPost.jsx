@@ -59,7 +59,7 @@ export default function NewPost() {
     e.preventDefault()
     setLoading(true)
     try {
-      if (postInfo.title.length <= 0 || postInfo.body.length <= 0) {
+      if (postInfo.title.length <= 0 || postInfo.body.length <= 0 || postInfo.hashtag.length <= 0) {
         setPostError(true)
         setLoading(false)
 

@@ -31,9 +31,16 @@ export default function PostSection() {
       {values && !filterHastTag && values.map((post) => <PostCard key={post.id} post={post} setFilter={filterPosts} />)}
       {!loading && filterHastTag &&
         <>
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex w-full justify-between items-center border-y-2 border-gray-800 py-4 px-1">
-            <p className="text-2xl text-blue-900 font-bold">Ideas that filtered by '{filterHastTag.title}'</p>
-            <button onClick={() => setFilterHashTag(undefined)} className="px-2 rounded-2xl duration-150 ease-in-out bg-blue-900 hover:bg-blue-500 font-bold">x</button>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex w-full justify-between shadow-sm rounded-3xl bg-gray-900 bg-opacity-50 items-center border-2 border-gray-800 py-4 px-4">
+            <p className="text-2xl text-white font-bold">Ideas that filtered by '{filterHastTag.title}'</p>
+            <button onClick={() => setFilterHashTag(undefined)} className="px-2 
+            rounded-2xl 
+            text-blue-900 
+            duration-150 
+            ease-in-out 
+            bg-white 
+            hover:bg-blue-500 
+            font-bold">x</button>
           </motion.div>
           {filterHastTag.posts.map((post) => <PostCard key={post.id} post={post} setFilter={filterPosts} />)}
         </>
