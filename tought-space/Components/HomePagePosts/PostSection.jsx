@@ -7,26 +7,37 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import LoadingComponent from "@/Components/LoadingComp/LoadingComponent"
 import { useState } from "react";
+import { motion } from "framer-motion";
 export default function PostSection() {
   const [user, userLoading] = useAuthState(auth)
   const postsDataRef = collection(db, "posts")
   const [values, loading, error, snapshot] = useCollectionData(postsDataRef)
   const [filterHastTag, setFilterHashTag] = useState()
+
   values?.sort((a, b) => b.createdAt - a.createdAt)
+
   function filterPosts(postTag) {
     const filtered = values.filter((post) => post.hashtag.includes(postTag))
-    setFilterHashTag(filtered)
+    setFilterHashTag({title: postTag, posts: filtered})
   }
 
-  console.log(filterHastTag)
   if (!user) {
     redirect('/LogInSignIn?mode=logIn')
   }
+
   return (
     <>
       {loading && <LoadingComponent />}
       {values && !filterHastTag && values.map((post) => <PostCard key={post.id} post={post} setFilter={filterPosts} />)}
-      {!loading && filterHastTag && filterHastTag.map((post) => <PostCard key={post.id} post={post} setFilter={filterPosts} />)}
+      {!loading && filterHastTag &&
+        <>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex w-full justify-between items-center border-y-2 border-gray-800 py-4 px-1">
+            <p className="text-2xl text-blue-900 font-bold">Ideas that filtered by '{filterHastTag.title}'</p>
+            <button onClick={() => setFilterHashTag(undefined)} className="px-2 rounded-2xl duration-150 ease-in-out bg-blue-900 hover:bg-blue-500 font-bold">x</button>
+          </motion.div>
+          {filterHastTag.posts.map((post) => <PostCard key={post.id} post={post} setFilter={filterPosts} />)}
+        </>
+      }
     </>
 
   )
