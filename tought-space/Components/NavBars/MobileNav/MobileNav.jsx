@@ -16,7 +16,6 @@ export default function MobileNav() {
       <div className={`${openNav ? "h-72" : "h-11"} duration-500 ease-in-out overflow-hidden hidden max-sm:flex`}>
         <nav className={`flex flex-col transition-all ${openNav && "justify-between"}  relative ${openNav && "h-full"} items-center duration-150 ease-in-out overflow-hidden`}>
           <button onClick={logOut} className={`text-lg flex items-center justify-center ${!openNav && "absolute bottom-1 invisible"} font-bold h-10 w-10 duration-150 bg-gray-900 px-3 py-1 rounded-full hover:bg-gray-500`}>{login}</button>
-          <Link href={'/adminPanel'} className={`text-lg flex items-center justify-center ${!openNav && "absolute bottom-1 invisible"} opacity-100 font-bold h-10 w-10 duration-150 bg-gray-900 px-3 py-1 rounded-full hover:bg-gray-500`}>{panel}</Link>
           <Link href={'/newPost'} className={`text-lg flex items-center justify-center ${!openNav && "absolute bottom-1 invisible"} opacity-100 font-bold h-10 w-10 duration-150 bg-gray-900 px-3 py-1 rounded-full hover:bg-gray-500`}>+</Link>
           <Link href={`/users/${userId?.id}`} className={`text-lg flex items-center justify-center ${!openNav && "absolute bottom-1 invisible"} opacity-100 font-bold h-10 w-10 duration-150  bg-gray-900 px-3 py-1 rounded-full hover:bg-gray-500`}>{profile}</Link>
           <Link href={'/'} className={`text-lg flex items-center justify-center ${!openNav && "absolute bottom-1 invisible"} opacity-100 font-bold h-10 w-10 duration-150 bg-gray-900 px-3 py-1 rounded-full hover:bg-gray-500`}>{home}</Link>

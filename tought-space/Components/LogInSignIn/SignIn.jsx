@@ -9,6 +9,7 @@ export default function SignIn() {
     password: "",
     likedPosts: []
   })
+  const [profilePic, setProfilePic] = useState()
   const nameRef = useRef()
   const ageRef = useRef()
   const emailRef = useRef()
@@ -23,7 +24,7 @@ export default function SignIn() {
 
   async function signIn(userInfo, e) {
     e.preventDefault()
-    await createAccount(userInfo)
+    await createAccount(userInfo, profilePic)
   }
 
 
@@ -38,6 +39,9 @@ export default function SignIn() {
       <input ref={emailRef} onChange={() => getUserInfo("email", emailRef)} type="email" name="email" className="text-black p-2 rounded-xl" placeholder="Email" />
       <label htmlFor="password" className="text-2xl">Password</label>
       <input ref={passwordRef} onChange={() => getUserInfo("password", passwordRef)} type="password" name="password" className="text-black p-2 rounded-xl" placeholder="Password" />
+      <label htmlFor="profilePic" className="text-2xl">Profile Picture</label>
+      <input type="file" name="profilePic" onChange={(e) => setProfilePic(e.target.files[0])} className="
+      file:bg-blue-600 file:text-sm file:text-white file:border-none file:rounded-lg file:p-2 file:shadow-2xl file:hover:cursor-pointer"/>
       <div className="flex justify-center items-center">
         <button type="submit" className="py-2 px-8 border-2 rounded-2xl bg-blue-600 duration-150 ease-in-out hover:bg-blue-700 text-white font-bold">Sign In</button>
       </div>

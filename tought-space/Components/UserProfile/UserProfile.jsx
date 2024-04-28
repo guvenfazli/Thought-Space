@@ -10,6 +10,7 @@ import { useEffect, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { notFound, redirect } from "next/navigation"
 import LoadingComponent from "@/Components/UserProfile/UserProfile"
+import Image from "next/image"
 
 export default function UserProfile({ userId }) {
   const [user, loading] = useAuthState(auth)
@@ -28,12 +29,14 @@ export default function UserProfile({ userId }) {
       redirect('/LogInSignIn?mode=logIn')
     }
 
-    if (!userLoading) {
-      if (!value) {
-        notFound()
-      }
-    }
   }, [loading])
+
+
+  if (!userLoading) {
+    if (!value) {
+      notFound()
+    }
+  }
 
   async function removeThePost(postId) {
     const usersPost = doc(db, "userList", userId, "posts", postId)
@@ -48,7 +51,10 @@ export default function UserProfile({ userId }) {
 
       {userLoading ? <p>Loading...</p> :
         <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 40, transition: { duration: 0.5 } }} className="mb-14">
-          <div className="flex justify-center">
+          <div className="flex flex-col items-center">
+            <div className="relative border-2 w-36 h-36 border-black mb-6 shadow-md">
+              <Image src={value.ppURL} fill alt="profilePic" />
+            </div>
             <p className="text-blue-800 font-semibold text-4xl max-md:text-3xl max-md:mb-4 max-sm:text-2xl">{value.name}</p>
           </div>
 

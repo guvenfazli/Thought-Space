@@ -26,6 +26,7 @@ export default function PostSection() {
     redirect('/LogInSignIn?mode=logIn')
   }
 
+  console.log(values)
   return (
     <>
       {loading && <LoadingComponent />}

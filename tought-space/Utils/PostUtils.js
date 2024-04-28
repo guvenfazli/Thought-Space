@@ -50,9 +50,9 @@ export async function createNewPost(post, userId) {
   const time = new Date;
   const postCreatedAt = time.getTime();
   let uniquePostId;
-  await addDoc(postListRef, { ...post, postOwner: userId, ownerName: creator.name, postId: postListRef.id, createdAt: postCreatedAt }).then((createdPost) => {
+  await addDoc(postListRef, { ...post, postOwner: userId, ownerName: creator.name, postId: postListRef.id, createdAt: postCreatedAt, creator: creator }).then((createdPost) => {
     uniquePostId = createdPost.id
-    return setDoc(doc(db, "posts", createdPost.id), { ...post, id: createdPost.id, postOwner: userId, ownerName: creator.name, createdAt: postCreatedAt })
+    return setDoc(doc(db, "posts", createdPost.id), { ...post, id: createdPost.id, postOwner: userId, ownerName: creator.name, createdAt: postCreatedAt, creator: creator })
   }).then(() => setDoc(doc(db, "userList", userId, "posts", uniquePostId), { ...post, id: uniquePostId, postOwner: userId, ownerName: creator.name, createdAt: postCreatedAt }))
 }
 

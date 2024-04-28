@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore"
 import { getAuth } from "firebase/auth"
-
+import { getStorage } from "firebase/storage";
 const firebaseConfig = {
   apiKey: "AIzaSyAgTHuVKOqAToVC4jsAyqfLSwAipmMDFhE",
   authDomain: "blog-poster-nextjs.firebaseapp.com",
@@ -14,5 +14,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app)
 const db = getFirestore(app);
+const storage = getStorage(app)
 
-export { db, auth }
+export { db, auth, storage }
