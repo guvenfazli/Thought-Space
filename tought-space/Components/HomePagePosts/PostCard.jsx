@@ -5,7 +5,7 @@ import { useEffect } from "react"
 import { redirect } from "next/navigation"
 import { motion } from "framer-motion"
 import { addViewData } from "@/Utils/PostUtils"
-
+import dayjs from "dayjs"
 export default function PostCard({ post, setFilter }) {
   const [user, loading] = useAuthState(auth)
 
@@ -25,7 +25,7 @@ export default function PostCard({ post, setFilter }) {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white bg-opacity-90 backdrop:blur-lg shadow-xl flex p-3 flex-col gap-y-5 overflow-hidden text-white justify-around rounded-xl w-full">
       <div className="flex flex-col">
         <p className="text-2xl mb-2 text-blue-800 font-semibold max-sm:text-lg">{post.title}</p>
-        <p className="text-xs text-gray-500">25 / 04 / 2024</p>
+        <p className="text-xs text-gray-500">{dayjs(post.createdAt).format('DD / MM / YYYY')}</p>
       </div>
 
       <div className="flex text-ellipsis border-y-2 py-4">

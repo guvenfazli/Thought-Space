@@ -8,6 +8,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import LoadingComponent from "@/Components/LoadingComp/LoadingComponent"
 import { useState } from "react";
 import { motion } from "framer-motion";
+
 export default function PostSection() {
   const [user, userLoading] = useAuthState(auth)
   const postsDataRef = collection(db, "posts")

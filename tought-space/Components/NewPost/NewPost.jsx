@@ -8,6 +8,7 @@ import { createNewPost } from "@/Utils/PostUtils"
 import { AnimatePresence, motion } from "framer-motion"
 
 
+
 export default function NewPost() {
 
   const [user, userLoading] = useAuthState(auth)
@@ -36,7 +37,7 @@ export default function NewPost() {
     if (e.key === ',') {
       hashtagRef.current.value = ''
       let hashtagList = []
-      hashtagList.push(hashTagInfo.replace(',', ''))
+      hashtagList.push(hashTagInfo.replace(',', '').replace(' ', '').trim())
       setPostInfo((prev) => {
         if(prev.hashtag){
           hashtagList.push(...prev.hashtag)
@@ -46,6 +47,15 @@ export default function NewPost() {
       })
       setHashTagInfo('')
     }
+  }
+
+  function deleteHashtag(hashtag){
+    const hashtagIndex = postInfo.hashtag.findIndex((hash) => hash === hashtag)
+    setPostInfo((prev) => {
+      let post = {...prev}
+      post.hashtag.splice(hashtagIndex, 1)
+      return post
+    })
   }
 
   function creatingNewPost(inputType, ref) {
@@ -125,7 +135,7 @@ export default function NewPost() {
           </label>
 
           <input ref={hashtagRef} onChange={(e) => setHashTagInfo(e.target.value)} onKeyUp={addHashTag} className={`shadow duration-150 ease-in-out appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${postError && "border-red-600"}`} id="title" type="text" placeholder="Separate with ','" />
-          {postInfo.hashtag?.map((hast) => <p className=" text-gray-800 text-sm hover:underline hover:cursor-pointer" key={hast}>#{hast}</p>)}
+          {postInfo.hashtag?.map((hast) => <p onClick={() => deleteHashtag(hast)} className=" text-gray-800 text-sm hover:underline hover:cursor-pointer" key={hast}>#{hast}</p>)}
         </div>
 
         <div className="flex items-center justify-between">
@@ -139,7 +149,7 @@ export default function NewPost() {
       <div className="flex justify-center">
         <AnimatePresence>
           {created && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="bg-green-500 text-white font-bold p-3 rounded-lg shadow-md max-sm:text-center max-sm:text-sm">Post Created Succesfully! Redirecting...</motion.p>}
-          {postError && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="bg-red-800 text-white font-bold p-3 rounded-lg shadow-md">Title or idea is missing!</motion.p>}
+          {postError && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="bg-red-800 text-white font-bold p-3 rounded-lg shadow-md">Title, idea or the hashtags are missing!</motion.p>}
         </AnimatePresence>
       </div>
     </motion.div>

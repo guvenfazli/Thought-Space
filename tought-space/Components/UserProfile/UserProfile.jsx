@@ -41,6 +41,8 @@ export default function UserProfile({ userId }) {
     await deleteDoc(usersPost).then(() => deleteDoc(postList))
   }
 
+  postValues?.sort((a, b) => b.createdAt - a.createdAt)
+
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full">
 
@@ -51,7 +53,7 @@ export default function UserProfile({ userId }) {
           </div>
 
           <div className="flex justify-between mb-4 items-center">
-            <p className="text-lg max-md:text-base max-sm:text-sm">{postValues.length} Ideas shared</p>
+            <p className="text-lg max-md:text-base max-sm:text-sm">{postValues?.length} Ideas shared</p>
             <p className="text-gray-500 text-sm max-md:text-xs">Joined at: {dayjs(value.accountCreatedAt).format('DD / MMM / YYYY')}</p>
           </div>
           <div className="flex flex-col gap-y-4 mb-4">

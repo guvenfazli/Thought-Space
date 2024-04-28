@@ -1,11 +1,11 @@
 import dayjs from "dayjs"
-
 import { doc } from "firebase/firestore"
 import { auth, db } from "@/app/firebaseConfig"
 import { getDoc, updateDoc } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { motion } from "framer-motion"
+import Link from "next/link"
 
 export default function Post({ value, edit, postRef, userId }) {
   const [sameUser, setSameUser] = useState(false)
@@ -66,8 +66,8 @@ export default function Post({ value, edit, postRef, userId }) {
         <p className="text-3xl mb-2 text-blue-800 font-semibold max-md:text-xl">{value.title}</p>
       </div>
       <div className="flex justify-between flex-row">
-        <p className="text-gray-500 duration-150 ease-in-out font-semibold hover:cursor-pointer hover:underline hover:text-gray-800">{value.ownerName}</p>
-        <p className="text-sm text-gray-500 whitespace-nowrap">26 / 04 / 2024</p>
+        <Link href={`/users/${value.postOwner}`} className="text-gray-500 duration-150 ease-in-out font-semibold hover:cursor-pointer hover:underline hover:text-gray-800">{value.ownerName}</Link>
+        <p className="text-sm text-gray-500 whitespace-nowrap">{dayjs(value.createdAt).format('DD / MM / YYYY')}</p>
       </div>
       <div className="border-y-4 py-3 flex flex-col px-2">
         <p className="mb-3 text-xl text-blue-800 font-medium max-md:text-lg">{value.title}</p>
