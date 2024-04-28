@@ -23,7 +23,7 @@ export default function LogInSignInPage() {
   if (!user) {
     return (
       <div className="flex w-full h-screen justify-center items-center p-3 text-white ">
-        <div className="flex flex-col bg-gray-900 bg-opacity-50 gap-y-7 justify-center w-1/2 border-2 p-4 rounded-xl max-sm:w-full">
+        <div className="flex flex-col bg-gray-900 bg-opacity-50 gap-y-7 justify-center w-2/3 border-2 p-4 rounded-xl max-lg:w-full">
           <div className="flex justify-center">
             <p className="text-2xl mb-8 text-white font-semibold">Tought <span className="font-normal">Space</span></p>
           </div>
@@ -33,7 +33,7 @@ export default function LogInSignInPage() {
       </div>
     )
 
-  } else {
+  } else if (user) {
     return (
       <div className="flex w-full h-screen justify-center items-center p-3 text-white ">
         <div className="flex flex-col bg-gray-900 bg-opacity-50 gap-y-7 justify-center w-1/2 border-2 p-4 rounded-xl max-sm:w-full">
