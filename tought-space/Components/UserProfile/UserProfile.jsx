@@ -53,7 +53,7 @@ export default function UserProfile({ userId }) {
         <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 40, transition: { duration: 0.5 } }} className="mb-14">
           <div className="flex flex-col items-center">
             <div className="relative border-2 w-36 h-36 border-black mb-6 shadow-md">
-              <Image src={value.ppURL} fill alt="profilePic" />
+              <Image src={value.ppURL} fill alt="profilePic" sizes="(max-width: 768px)"/>
             </div>
             <p className="text-blue-800 font-semibold text-4xl max-md:text-3xl max-md:mb-4 max-sm:text-2xl">{value.name}</p>
           </div>

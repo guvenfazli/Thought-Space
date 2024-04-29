@@ -13,7 +13,6 @@ export default function MenuNav() {
   }
   const [userData, userDataLoading] = useDocumentData(userRef)
 
-  console.log(userData)
 
   if (user) {
     return (

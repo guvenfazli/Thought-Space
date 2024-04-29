@@ -34,8 +34,8 @@ export default function PostCard({ post, setFilter }) {
 
       <div className="flex justify-between items-center">
         <div className="flex h-full items-center">
-          <div className="flex h-full mr-4 w-10 rounded-3xl relative">
-            <Image src={post.creator.ppURL} fill className="rounded-3xl"/>
+          <div className="flex h-full mr-4 w-10 rounded-3xl relative max-md:w-7">
+            <Image src={post.creator.ppURL} alt="profilePic" sizes="(max-width: 768px)" fill className="rounded-3xl"/>
           </div>
           <Link href={`/users/${post.postOwner}`} className="text-base  text-gray-500 duration-150 ease-in-out font-semibold hover:cursor-pointer hover:underline hover:text-gray-800 max-sm:text-sm">{post.ownerName}</Link>
         </div>

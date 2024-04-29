@@ -100,7 +100,7 @@ export default function Post({ value, edit, postRef, userId }) {
 
       {
         latestEdits?.map((editHistory) =>
-          <div key={value.id} className="flex flex-col border-2 text-lg items-start p-3">
+          <div key={editHistory.title} className="flex flex-col border-2 text-lg items-start p-3">
             <div className="mb-3">
               <p className="text-sm text-gray-500 max-md:text-xs">Edit Date: {dayjs(editHistory.editDate).format('DD / MM / YYYY')}</p>
             </div>

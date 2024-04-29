@@ -10,9 +10,11 @@ export default function EditPost({ value, postRef, userId, edit }) {
   const [oldLog, setOldLog] = useState()
 
   const [editInfo, setEditInfo] = useState({
-    title: "",
-    body: ""
+    title: value.title,
+    body: value.body
   })
+
+  const [editError, setEditError] = useState(false)
 
   const titleRef = useRef()
   const bodyRef = useRef()
@@ -23,6 +25,7 @@ export default function EditPost({ value, postRef, userId, edit }) {
       return updatedInfo
     })
   }
+
 
 
   useEffect(() => {
@@ -46,19 +49,22 @@ export default function EditPost({ value, postRef, userId, edit }) {
 
 
   async function editPost() {
-    await updateDoc(docRef, {
-      title: editInfo.title,
-      body: editInfo.body,
-      edited: oldLog
-    }).then(async () => {
-      await updateDoc(docRefForUser, {
+    if (editInfo.title.length > 0 && editInfo.body.length > 0) {
+      await updateDoc(docRef, {
         title: editInfo.title,
         body: editInfo.body,
         edited: oldLog
+      }).then(async () => {
+        await updateDoc(docRefForUser, {
+          title: editInfo.title,
+          body: editInfo.body,
+          edited: oldLog
+        })
       })
-    })
-
-    edit(false)
+      edit(false)
+    } else {
+      setEditError(true)
+    }
   }
 
   return (
@@ -71,8 +77,8 @@ export default function EditPost({ value, postRef, userId, edit }) {
         <p className="text-sm text-gray-500 whitespace-nowrap">{dayjs(value.createdAt).format('DD / MMM / YYYY')}</p>
       </div>
       <div className="border-y-4 py-3 flex flex-col px-2">
-        <input ref={titleRef} className="mb-3" onChange={() => getEditInfo("title", titleRef)} type="text" placeholder={value.title} />
-        <textarea ref={bodyRef} onChange={() => getEditInfo("body", bodyRef)} type="text" placeholder={value.body} />
+        <input ref={titleRef} onChange={() => getEditInfo("title", titleRef)} type="text" placeholder={value.title} value={editInfo.title} className={`${editError && "border border-red-800 duration-150 ease-in-out"} mb-3`}/>
+        <textarea ref={bodyRef} onChange={() => getEditInfo("body", bodyRef)} type="text" placeholder={value.body} value={editInfo.body} className={`${editError && "border border-red-800 duration-150 ease-in-out"}`}/>
       </div>
       <div className="flex justify-around">
         <button className="bg-blue-800 px-3 py-2 rounded-lg text-white text-sm duration-150 ease-in-out font-bold hover:bg-blue-600" onClick={() => editPost()}>Done Editing</button>
