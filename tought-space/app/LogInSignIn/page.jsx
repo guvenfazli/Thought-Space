@@ -7,6 +7,7 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from "@/app/firebaseConfig";
 import { redirect } from "next/navigation"
 import { useEffect } from "react"
+import { Suspense } from "react"
 export default function LogInSignInPage() {
   const searchParams = useSearchParams()
   let mode = searchParams.get('mode')
@@ -28,8 +29,10 @@ export default function LogInSignInPage() {
           <div className="flex justify-center">
             <p className="text-2xl mb-8 text-white font-semibold">Tought <span className="font-normal">Space</span></p>
           </div>
-          {mode === "logIn" ? <LogIn /> : <SignIn />}
-          <LogInSignInNav mode={mode} />
+          <Suspense>
+            {mode === "logIn" ? <LogIn /> : <SignIn />}
+            <LogInSignInNav mode={mode} />
+          </Suspense>
         </div>
       </div>
     )
