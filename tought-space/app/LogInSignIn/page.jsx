@@ -8,7 +8,8 @@ import { auth } from "@/app/firebaseConfig";
 import { redirect } from "next/navigation"
 import { useEffect } from "react"
 import { Suspense } from "react"
-export default function LogInSignInPage() {
+
+function LogInSignInPage() {
   const searchParams = useSearchParams()
   let mode = searchParams.get('mode')
   const [user, loading] = useAuthState(auth)
@@ -47,4 +48,12 @@ export default function LogInSignInPage() {
       </div>
     )
   }
+}
+
+export default function LogInSignIn(){
+  return (
+    <Suspense>
+      <LogInSignInPage />
+    </Suspense>
+  )
 }
