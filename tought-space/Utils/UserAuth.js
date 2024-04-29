@@ -11,8 +11,11 @@ async function refreshToken(userRef, user) {
     ...getUser,
     token: user.accessToken
   })
-  localStorage.setItem('token', user.accessToken)
-  localStorage.setItem('user', JSON.stringify({ id: user.uid }))
+
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('token', user.accessToken)
+    localStorage.setItem('user', JSON.stringify({ id: user.uid }))
+  }
 
 }
 
@@ -32,7 +35,7 @@ export async function createAccount(userInfo, profilePic) {
       setDoc(doc(db, "userList", `${user.uid}`), { ...userInfo, id: user.uid, token: user.accessToken, ppURL: url })
     })
   })
-  if (user) {
+  if (user && typeof window !== 'undefined') {
     localStorage.setItem('token', user.accessToken)
     localStorage.setItem('user', JSON.stringify({ id: user.uid }))
   }
@@ -40,7 +43,8 @@ export async function createAccount(userInfo, profilePic) {
 
 export async function logOut() {
   await signOut(auth)
-  localStorage.removeItem('token')
+  if (typeof window !== 'undefined')
+    localStorage.removeItem('token')
   localStorage.removeItem('user')
 
 }
