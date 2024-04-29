@@ -28,7 +28,7 @@ export default function PostCard({ post, setFilter }) {
         <p className="line-clamp-3 text-lg text-gray-600 font-medium max-md:text-base max-sm:text-sm">{post.body}</p>
       </div>
 
-      <div className="flex flex-row gap-x-1">
+      <div className="flex flex-row gap-x-1 flex-wrap">
         {post.hashtag.map((tag) => <p key={tag} onClick={() => setFilter(tag)} className="text-gray-700 text-xs hover:underline hover:cursor-pointer">#{tag}</p>)}
       </div>
 

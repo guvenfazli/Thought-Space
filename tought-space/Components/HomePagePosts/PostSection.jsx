@@ -33,7 +33,7 @@ export default function PostSection() {
       {!loading && filterHastTag &&
         <>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex w-full justify-between shadow-sm rounded-3xl bg-gray-800 bg-opacity-90 items-center border-2 border-gray-800 py-4 px-4">
-            <p className="text-lg text-white font-bold">Ideas that filtered by '{filterHastTag.title}'</p>
+            <p className="text-lg text-white font-bold max-md:text-sm">Ideas that filtered by '{filterHastTag.title}'</p>
             <button onClick={() => setFilterHashTag(undefined)} className="px-2 rounded-2xl text-black duration-150 ease-in-out bg-white hover:bg-black hover:text-white font-bold">x</button>
           </motion.div>
           {filterHastTag.posts.map((post) => <PostCard key={post.id} post={post} setFilter={filterPosts} />)}
