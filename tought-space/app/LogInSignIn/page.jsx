@@ -12,10 +12,6 @@ export default function LogInSignInPage() {
   let mode = searchParams.get('mode')
   const [user, loading] = useAuthState(auth)
 
-  if (typeof window !== 'undefined') {
-    // Perform localStorage action
-    const token = localStorage.getItem('token')
-  }
 
   useEffect(() => {
     if (user) {
