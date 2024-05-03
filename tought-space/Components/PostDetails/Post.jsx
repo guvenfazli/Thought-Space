@@ -13,7 +13,7 @@ export default function Post({ value, edit, postRef, userId }) {
   const [postLiked, setPostLiked] = useState(false)
 
   useEffect(() => {
-    if (value.postOwner === user.uid) {
+    if (value.postOwner === user?.uid) {
       setSameUser(true)
     }
     async function checkIfAlreadyLiked() {

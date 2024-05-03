@@ -28,7 +28,7 @@ export default function PostDetailCard({ postId }) {
   return (
     <div className="flex flex-col p-3 gap-y-9 w-2/4 shadow-2xl items-center  bg-gray-100  text-black rounded-lg max-sm:w-full">
       {loading && <LoadingComponent />}
-      {!editMode && value && <Post edit={setEditMode} value={value} postRef={postRef} userId={user.uid} />}
+      {!editMode && value && <Post edit={setEditMode} value={value} postRef={postRef} userId={user?.uid} />}
       {editMode && value && <EditPost value={value} postRef={postRef} userId={user.uid} edit={setEditMode} />}
     </div>
   )
