@@ -10,12 +10,26 @@ import Link from "next/link"
 export default function Post({ value, edit, postRef, userId }) {
   const [sameUser, setSameUser] = useState(false)
   const [user, loading] = useAuthState(auth)
+  const [postLiked, setPostLiked] = useState(false)
 
   useEffect(() => {
     if (value.postOwner === user.uid) {
       setSameUser(true)
     }
-  }, [loading])
+    async function checkIfAlreadyLiked() {
+      const getChosenDoc = await getDoc(postRef).then((data) => data.data())
+      const getUserRef = doc(db, "userList", userId)
+      const currentUser = await getDoc(getUserRef).then((data) => data.data())
+      const alreadyLiked = currentUser.likedPosts.some((postId) => postId.id === getChosenDoc.id)
+      if (alreadyLiked) {
+        setPostLiked(true)
+      } else {
+        setPostLiked(false)
+      }
+    }
+
+    checkIfAlreadyLiked()
+  }, [loading, postLiked])
 
   const latestEdits = value.edited?.sort((a, b) => b.editDate - a.editDate)
 
@@ -31,6 +45,7 @@ export default function Post({ value, edit, postRef, userId }) {
         ...currentUser,
         likedPosts: likedPostsList
       })
+      setPostLiked(true)
     } else {
       let alreadyIndex = currentUser.likedPosts.findIndex((post) => post.id === post.id)
       likedPostsList.splice(alreadyIndex, 1)
@@ -38,6 +53,7 @@ export default function Post({ value, edit, postRef, userId }) {
         ...currentUser,
         likedPosts: likedPostsList
       })
+      setPostLiked(false)
     }
 
     const getChosenDoc = await getDoc(postRef).then((data) => data.data())
@@ -57,6 +73,8 @@ export default function Post({ value, edit, postRef, userId }) {
         likes: likedUsersList
       })
     }
+
+
   }
 
   return (
@@ -85,7 +103,7 @@ export default function Post({ value, edit, postRef, userId }) {
           onClick={() => edit(true)}>Edit Post</button>
         }
         <button className="bg-green-800 px-3 py-2 rounded-lg text-white text-sm duration-150 ease-in-out font-bold hover:bg-green-600 max-md:px-2 max-md:py-1"
-          onClick={() => likeThePost(value, userId, postRef)}>Like the Post!</button>
+          onClick={() => likeThePost(value, userId, postRef)}>{postLiked ? 'Liked!' : 'Like the Post!'}</button>
       </div>
 
       <div className="flex justify-center">
