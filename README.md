@@ -5,6 +5,7 @@ Tought Space is a cutting-edge social media application designed for users to un
 
 ## Features<br>
 - **Create & Edit Posts**: Effortlessly post your ideas, edit them as needed, and express your thoughts with customizable hashtags to increase their visibility.
+- **Token-Based User Authentication and Access Control**: Our application uses token-based authentication to manage user sessions securely. User tokens are checked on each page to verify whether the user is logged in, ensuring that only authenticated users can access specific pages. Depending on the token's information, users can be granted access to admin panels or restricted areas. This system ensures that only authorized users can perform administrative actions, enhancing the security and integrity of the application.
 - **Interactive Post Engagement**: Like posts to show your appreciation, and see how many people are interested in similar topics through the click rate feature.
 - **Personalized Profiles**: Set up your profile with a custom profile picture, making your interactions more personal and engaging.
 - **Hashtag Functionality**: Use hashtags to categorize your posts or find related content created by others.
