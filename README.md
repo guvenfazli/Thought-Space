@@ -1,4 +1,4 @@
-# Tought Space
+# Thought Space
 ## [Live Site](https://tought-space.vercel.app)
 
 Tought Space is a cutting-edge social media application designed for users to unleash their creativity, share thoughts, and engage with a community of like-minded individuals. Powered by Firebase, NextJS, and Tailwind CSS, this platform offers a seamless and stylish user experience for blogging and social interactions.
