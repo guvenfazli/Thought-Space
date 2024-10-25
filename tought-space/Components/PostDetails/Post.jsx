@@ -98,6 +98,7 @@ export default function Post({ value, edit, postRef, userId }) {
 
 
 
+
       <div className="flex justify-around">
         {sameUser && <button className="bg-blue-800 px-3 py-2 rounded-lg text-white text-sm duration-150 ease-in-out font-bold hover:bg-blue-600 max-md:px-2 max-md:py-1"
           onClick={() => edit(true)}>Edit Post</button>
